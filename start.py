@@ -66,7 +66,7 @@ small_black_images = [black_pawn_small, black_queen_small, black_king_small, bla
 piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 
 captured_pieces_white = ['pawn', 'pawn']
-captured_pieces_black = ['queen', 'pawn', 'pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn']
+captured_pieces_black = ['pawn', 'pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn']
 turn_step = 0
 selection = 100
 valid_moves = []
