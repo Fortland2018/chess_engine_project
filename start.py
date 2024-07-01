@@ -20,16 +20,16 @@ black_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight',
                 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn']
 black_locations = [(0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7),
                    (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6)]
-captured_pieces_white = []
-captured_pieces_black = []
-turn_step = 0
-selection = 100
-valid_moves = []
 
 # load in game piece images
 def load_and_scale(filename, size):
     img = pygame.image.load(f'assets/{filename}')
     return pygame.transform.scale(img, size)
+
+def load_and_scale2(filename, size):
+    img = pygame.image.load(f'assets/{filename}')
+    return pygame.transform.scale(img, size)
+
 
 black_queen = load_and_scale('bQ.png', (80, 80))
 black_queen_small = load_and_scale('bQ.png', (45, 45))
@@ -65,34 +65,43 @@ small_black_images = [black_pawn_small, black_queen_small, black_king_small, bla
                       black_rook_small, black_bishop_small]
 piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 
+captured_pieces_white = ['pawn', 'pawn']
+captured_pieces_black = ['queen', 'pawn', 'pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn','pawn']
+turn_step = 0
+selection = 100
+valid_moves = []
+
 # check variables/ flashing counter
 counter = 0
 winner = ''
 game_over = False
 
 background = load_and_scale('wood4.jpg', (WIDTH-100, HEIGHT))
-
+tlo = load_and_scale('tlo.jpeg', (100, HEIGHT))
 def draw_captured_pieces():
-    x = WIDTH - 80  # Starting x position for captured pieces
-    y = 20  # Starting y position for captured pieces
     piece_order = ['queen', 'rook', 'bishop', 'knight', 'pawn']
-
+    
+    # Draw captured white pieces
+    x_white = WIDTH - 100  # Starting x position for captured white pieces
+    y_white = 20  # Starting y position for captured white pieces
     for piece in piece_order:
-        for img, captured in zip(small_white_images, captured_pieces_white):
-            if piece in captured:
-                screen.blit(img, (x, y))
-                y += 50  # Move down for next piece
+        count = captured_pieces_white.count(piece)
+        for i in range(count):
+            index = piece_list.index(piece)
+            screen.blit(small_white_images[index], (x_white, y_white))
+            y_white += 42  # Move down for the next piece
+        y_white = 0  # Reset y position for the next type of piece
 
-    x = WIDTH - 50  # Starting x position for captured pieces
-    y = 20  # Starting y position for captured pieces
-
+    # Draw captured black pieces
+    x_black = WIDTH - 50  # Starting x position for captured black pieces
+    y_black = 20  # Starting y position for captured black pieces
     for piece in piece_order:
-        for img, captured in zip(small_black_images, captured_pieces_black):
-            if piece in captured:
-                screen.blit(img, (x, y))
-                y += 50  # Move down for next piece
-
-
+        count = captured_pieces_black.count(piece)
+        for i in range(count):
+            index = piece_list.index(piece)
+            screen.blit(small_black_images[index], (x_black, y_black))
+            y_black += 42  # Move down for the next piece
+        y_black = 0  # Reset y position for the next type of piece
 def draw_pieces():
     for i in range(len(white_pieces)):
         index = piece_list.index(white_pieces[i])
@@ -123,9 +132,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+    # screen.fill('')
     screen.blit(background, (0, 0))  # Draw the background image
-    
+    screen.blit(tlo, (650, 0))
 
 
     draw_pieces()
