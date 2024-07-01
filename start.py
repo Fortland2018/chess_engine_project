@@ -1,10 +1,10 @@
 import pygame
 
 pygame.init()
-WIDTH = 700
-HEIGHT = 600
+WIDTH = 750
+HEIGHT = 650
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
-pygame.display.set_caption('Two-Player Pygame Chess!')
+pygame.display.set_caption('Szachy Wikora Żabka')
 font = pygame.font.Font('freesansbold.ttf', 20)
 medium_font = pygame.font.Font('freesansbold.ttf', 40)
 big_font = pygame.font.Font('freesansbold.ttf', 50)
@@ -97,23 +97,23 @@ def draw_pieces():
     for i in range(len(white_pieces)):
         index = piece_list.index(white_pieces[i])
         if white_pieces[i] == 'pawn':
-            screen.blit(white_pawn, (white_locations[i][0] * 100 + 22, white_locations[i][1] * 100 + 30))
+            screen.blit(white_pawn, (white_locations[i][0] * 81.5 + 7 , white_locations[i][1] * 81.5 + 7))
         else:
-            screen.blit(white_images[index], (white_locations[i][0] * 100 + 10, white_locations[i][1] * 100 + 10))
+            screen.blit(white_images[index], (white_locations[i][0] * 81.5 + 0, white_locations[i][1] * 81.5 + 0))
         if turn_step < 2:
             if selection == i:
-                pygame.draw.rect(screen, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1,
+                pygame.draw.rect(screen, 'red', [white_locations[i][0] * 75 + 5, white_locations[i][1] * 75 + 5,
                                                  100, 100], 2)
 
     for i in range(len(black_pieces)):
         index = piece_list.index(black_pieces[i])
         if black_pieces[i] == 'pawn':
-            screen.blit(black_pawn, (black_locations[i][0] * 100 + 22, black_locations[i][1] * 100 + 30))
+            screen.blit(black_pawn, (black_locations[i][0] * 81.5 + 7, black_locations[i][1] *  81.5 + 7))
         else:
-            screen.blit(black_images[index], (black_locations[i][0] * 100 + 10, black_locations[i][1] * 100 + 10))
+            screen.blit(black_images[index], (black_locations[i][0] * 81.5 + 0, black_locations[i][1] * 81.5 + 0))
         if turn_step >= 2:
             if selection == i:
-                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,
+                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 75 + 5, black_locations[i][1] * 75 + 5,
                                                   100, 100], 2)
 
 
