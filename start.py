@@ -129,17 +129,19 @@ def draw_pieces():
 
 running = True
 while running:
+    timer.tick(fps)  # Control the frame rate 
+    screen.blit(background, (0, 0))  # Draw the background image
+    screen.blit(tlo, (650, 0))
+    draw_pieces()
+    draw_captured_pieces()
+   
+   
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
     # screen.fill('')
-    screen.blit(background, (0, 0))  # Draw the background image
-    screen.blit(tlo, (650, 0))
 
-
-    draw_pieces()
-    draw_captured_pieces()
+    
     pygame.display.flip()  # Update the display
-    timer.tick(fps)  # Control the frame rate
 
 pygame.quit()
