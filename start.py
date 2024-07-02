@@ -76,6 +76,11 @@ counter = 0
 winner = ''
 game_over = False
 
+
+# def check_options():
+
+
+
 background = load_and_scale('wood4.jpg', (WIDTH-100, HEIGHT))
 tlo = load_and_scale('tlo.jpeg', (100, HEIGHT))
 def draw_captured_pieces():
@@ -109,10 +114,10 @@ def draw_pieces():
             screen.blit(white_pawn, (white_locations[i][0] * 81.5 + 7 , white_locations[i][1] * 81.5 + 7))
         else:
             screen.blit(white_images[index], (white_locations[i][0] * 81.5 + 0, white_locations[i][1] * 81.5 + 0))
-        if turn_step < 2:
-            if selection == i:
-                pygame.draw.rect(screen, 'red', [white_locations[i][0] * 75 + 5, white_locations[i][1] * 75 + 5,
-                                                 100, 100], 2)
+        # if turn_step < 2:
+        #     if selection == i:
+        #         pygame.draw.rect(screen, 'red', [white_locations[i][0] * 75 + 5, white_locations[i][1] * 75 + 5,
+        #                                          81.5, 81.5], 2)
 
     for i in range(len(black_pieces)):
         index = piece_list.index(black_pieces[i])
@@ -120,12 +125,18 @@ def draw_pieces():
             screen.blit(black_pawn, (black_locations[i][0] * 81.5 + 7, black_locations[i][1] *  81.5 + 7))
         else:
             screen.blit(black_images[index], (black_locations[i][0] * 81.5 + 0, black_locations[i][1] * 81.5 + 0))
-        if turn_step >= 2:
-            if selection == i:
-                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 75 + 5, black_locations[i][1] * 75 + 5,
-                                                  100, 100], 2)
-
-
+        # if turn_step >= 2:
+        #     if selection == i:
+        #         pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 81.5, black_locations[i][1] * 81.5,
+        #                                           81.5, 81.5], 2)
+        ################################# RYSOWANIE CZERWONEGO PROSTOKATA
+    # if selection != 100:
+    #     if turn_step < 2:
+    #         x, y = white_locations[selection]
+    #         pygame.draw.rect(screen, 'red', [x * 81.5, y * 81.5, 81.5, 81.5], 2)
+    #     else:
+    #         x, y = black_locations[selection]
+    #         pygame.draw.rect(screen, 'blue', [x * 81.5, y * 81.5, 81.5, 81.5], 2)
 
 running = True
 while running:
@@ -139,7 +150,49 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    # screen.fill('')
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            x_coord = event.pos[0]
+            y_coord = event.pos[1]
+            click_coords = (x_coord, y_coord)
+            if turn_step <= 1:
+                if click_coords in white_locations:
+                    selection = white_location.index(click_coords)
+                    if turn_step == 0:
+                        turn_step = 1
+                # przemieszczanie bialego na inna pozycje i bicie czarnego
+                if click_coords in valid_moves and selection != 100:
+                    white_locations[selection] = click_coords
+                    if click_coords in black_locations:
+                        black_piece = black_locations.index(click_coords)
+                        captured_pieces_black.append(black_pieces[black_piece])
+                        draw_captured_pieces()
+                        black_pieces.pop(black_piece)
+                        black_locations.pop(black_piece)
+                    # black_options = check_options(black_pieces, black_locations, 'black')
+                    # white_options = check_options(white_pieces, white_locations, 'white')
+                    turn_step = 2
+                    selection = 100
+                    valid_moves = []
+            if turn_step >= 2:
+                if click_coords in black_locations:
+                    selection = black_locations.index(click_coords)
+                    if turn_step == 2:
+                        turn_step = 3
+                # przemieszczanie czarnego na inna pozycje i bicie bialego
+                if click_coords in valid_moves and selection != 100:
+                    black_locations[selection] = click_coords
+                    if click_coords in white_locations:
+                        white_piece = white_locations.index(click_coords)
+                        captured_pieces_white.append(black_pieces[white_piece])
+                        draw_captured_pieces()
+                        white_pieces.pop(white_piece)
+                        white_locations.pop(white_piece)
+                    # black_options = check_options(black_pieces, black_locations, 'black')
+                    # white_options = check_options(white_pieces, white_locations, 'white')
+                    turn_step = 0
+                    selection = 100
+                    valid_moves = []
+     
 
     
     pygame.display.flip()  # Update the display
