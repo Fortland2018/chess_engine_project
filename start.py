@@ -77,7 +77,7 @@ winner = ''
 game_over = False
 
 
-# def check_options():
+
 
 
 
@@ -138,6 +138,32 @@ def draw_pieces():
     #         x, y = black_locations[selection]
     #         pygame.draw.rect(screen, 'blue', [x * 81.5, y * 81.5, 81.5, 81.5], 2)
 
+ # ['queen', 'rook', 'bishop', 'knight', 'pawn']
+def check_options(pieces, locations, turn):
+    for i in pieces:
+        if i ==  'queen':
+            valid_moves = check_queen(locations, turn)
+        if i ==  'rook':
+            valid_moves = check_rook(locations, turn)
+        if i ==  'bishop':
+            valid_moves = check_bishop(locations, turn)
+        if i ==  'knight':
+            valid_moves = check_knight(locations, turn)
+        if i ==  'pawn':
+            valid_moves = check_pawn(locations, turn)
+        if i ==  'king':
+            valid_moves = check_king(locations, turn)
+    return valid_moves
+
+
+
+
+def friend_or_enemy(turn, locations, pieces):
+    friends_list = white_pieces if turn == 'white' else black_pieces
+    enemy_list = black_pieces if turn == 'white' else white_pieces
+
+
+
 running = True
 while running:
     timer.tick(fps)  # Control the frame rate 
@@ -168,8 +194,8 @@ while running:
                         draw_captured_pieces()
                         black_pieces.pop(black_piece)
                         black_locations.pop(black_piece)
-                    # black_options = check_options(black_pieces, black_locations, 'black')
-                    # white_options = check_options(white_pieces, white_locations, 'white')
+                    black_options = check_options(black_pieces, black_locations, 'white')
+                    white_options = check_options(white_pieces, white_locations, 'white')
                     turn_step = 2
                     selection = 100
                     valid_moves = []
@@ -187,8 +213,8 @@ while running:
                         draw_captured_pieces()
                         white_pieces.pop(white_piece)
                         white_locations.pop(white_piece)
-                    # black_options = check_options(black_pieces, black_locations, 'black')
-                    # white_options = check_options(white_pieces, white_locations, 'white')
+                    black_options = check_options(black_pieces, black_locations, 'black')
+                    white_options = check_options(white_pieces, white_locations, 'black')
                     turn_step = 0
                     selection = 100
                     valid_moves = []
